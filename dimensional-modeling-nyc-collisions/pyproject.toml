@@ -1,0 +1,19 @@
+[project]
+name = "dimensional-modeling-nyc-collisions"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Daud Jan", email = "daudfey@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pandas>=2.3.3",
+]
+
+[project.scripts]
+dimensional-modeling-nyc-collisions = "dimensional_modeling_nyc_collisions:main"
+
+[build-system]
+requires = ["uv_build>=0.8.19,<0.9.0"]
+build-backend = "uv_build"
