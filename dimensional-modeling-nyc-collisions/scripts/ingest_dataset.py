@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 ingest_dataset.py
 
@@ -12,7 +11,6 @@ import psycopg2
 from io import StringIO
 from dotenv import load_dotenv
 
-# Load variables from .env file
 load_dotenv()
 
 DB_USER = os.getenv("POSTGRES_USER")
@@ -24,10 +22,13 @@ DB_PORT = os.getenv("POSTGRES_PORT", "5430")
 BASE_URL = "https://data.cityofnewyork.us/resource/h9gi-nx95.csv"
 
 def main(limit: int):
-    url = f"{BASE_URL}?$limit={limit}" if limit > 0 else BASE_URL
-    print(f"📥 Downloading dataset from {url} ...")
+    if limit > 0:
+        url = f"{BASE_URL}?$limit={limit}"
+    else:
+     url = f"{BASE_URL}?$limit=2000000"
+    print(f"Downloading dataset from {url} ...")
     df = pd.read_csv(url)
-    print(f"✅ Downloaded {df.shape[0]} rows, {df.shape[1]} columns")
+    print(f"Downloaded {df.shape[0]} rows, {df.shape[1]} columns")
 
     conn = psycopg2.connect(
         host=DB_HOST,
