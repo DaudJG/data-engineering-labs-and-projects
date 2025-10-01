@@ -1,4 +1,6 @@
-CREATE TABLE IF NOT EXISTS crashes_raw (
+DROP TABLE IF EXISTS crashes_raw;
+
+CREATE TABLE crashes_raw (
     crash_date                        date,
     crash_time                        time,
     borough                           text,
@@ -9,14 +11,14 @@ CREATE TABLE IF NOT EXISTS crashes_raw (
     on_street_name                    text,
     off_street_name                   text,
     cross_street_name                 text,
-    number_of_persons_injured         integer,
-    number_of_persons_killed          integer,
-    number_of_pedestrians_injured     integer,
-    number_of_pedestrians_killed      integer,
-    number_of_cyclist_injured         integer,
-    number_of_cyclist_killed          integer,
-    number_of_motorist_injured        integer,
-    number_of_motorist_killed         integer,
+    number_of_persons_injured         numeric,
+    number_of_persons_killed          numeric,
+    number_of_pedestrians_injured     numeric,
+    number_of_pedestrians_killed      numeric,
+    number_of_cyclist_injured         numeric,
+    number_of_cyclist_killed          numeric,
+    number_of_motorist_injured        numeric,
+    number_of_motorist_killed         numeric,
     contributing_factor_vehicle_1     text,
     contributing_factor_vehicle_2     text,
     contributing_factor_vehicle_3     text,
