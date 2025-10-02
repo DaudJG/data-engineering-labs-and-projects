@@ -2,27 +2,36 @@
 include .env
 export
 
-up:
+.PHONY: db-up db-down db-logs db-cli env-copy inspect-data ingest-data reset-data
+
+# --- Docker / Database Management ---
+
+db-up:
 	docker compose up -d
 
-down:
+db-down:
 	docker compose down
 
-logs:
+db-logs:
 	docker compose logs -f
 
-pgcli:
+db-cli:
 	pgcli -h localhost -p $(HOST_PORT) -U $(POSTGRES_USER) -d $(POSTGRES_DB)
 
-copy-env:
+# --- Environment Setup ---
+
+env-copy:
 	cp example.env .env
 
-inspect:
-    python scripts/inspect_dataset.py --url "https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=1000"
+# --- Data Tasks ---
 
+inspect-data:
+	python scripts/inspect_dataset.py
 
-ingest-full:
+ingest-data:
+	@echo "Ingesting full dataset into Postgres..."
+	uv run scripts/ingest_dataset.py --limit 0
+
+reset-data:
 	@echo "Truncating staging table crashes_raw..."
 	docker exec -i postgres-crashes psql -U $(POSTGRES_USER) -d $(POSTGRES_DB) -c "TRUNCATE TABLE crashes_raw;"
-	@echo "Ingesting full dataset..."
-	uv run scripts/ingest_dataset.py --limit 0
